@@ -1,3 +1,5 @@
+package courses.course1.week1.AplusB;
+
 import java.util.Scanner;
 
 public class AplusB {
