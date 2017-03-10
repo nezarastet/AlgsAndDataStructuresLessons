@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/algsAndDataStructCoursera.iml" filepath="$PROJECT_DIR$/algsAndDataStructCoursera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AlgsAndDataStructuresLessons.iml" filepath="$PROJECT_DIR$/AlgsAndDataStructuresLessons.iml" />
     </modules>
   </component>
 </project>
