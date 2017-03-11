@@ -1,5 +1,3 @@
-package courses.course1.week1.maxPairWiseProduct;
-
 import java.util.*;
 import java.io.*;
 
