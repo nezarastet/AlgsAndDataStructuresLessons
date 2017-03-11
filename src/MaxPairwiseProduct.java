@@ -46,18 +46,51 @@ public class MaxPairwiseProduct {
         return result;
     }
 
+    static void stresstest(int maxIter){
+        int i = 0;
+        Random rand = new Random(1987);  // init from the same start value gives always the same sequence of rand numbers
+        while ( i < maxIter){
+                i++;
+                int n  = rand.nextInt(10) + 2;  // получим от 2х до 11ти
+                System.out.printf( n + "\n");
+                long[] numbers = new long[n];
+                for (int j = 0; j < n; j++){
+                    numbers[j]=rand.nextInt(10);
+                    System.out.printf(numbers[j] + " ");
+                }
+                System.out.printf("\n");
+                long res1 = getMaxPairwiseProduct(numbers);
+                long res2 = getMaxPairwiseProductFast(numbers);
+
+                if (res1 != res2){
+                    System.out.printf("Wrong answer:" + res1 + " " + res2 + "\n");
+                    break;
+                }
+                else{
+                    System.out.println("OK");
+                }
+
+
+            }
+
+    }
+
 
 
     public static void main(String[] args) {
+// for stress test implementation
+        //stresstest(10000);
+        //System.out.println("stress test end");
+
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
         long[] numbers = new long[n];
         for (int i = 0; i < n; i++) {
             numbers[i] = scanner.nextInt();
         }
-
-//for testing        numbers = new long[200000];
-//for testing        System.out.println(getMaxPairwiseProduct(numbers) + "\n");
+//for testing
+        //numbers = new long[200000];
+        //System.out.println(getMaxPairwiseProduct(numbers) + "\n");
         System.out.println(getMaxPairwiseProductFast(numbers));
     }
 
