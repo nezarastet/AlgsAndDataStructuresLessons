@@ -14,11 +14,26 @@ public class GCD {
     return current_gcd;
   }
 
+  private static int gcd_fast(int a, int b) {
+    int MaxVal = Math.max(a,b);
+    int MinVal = Math.min(a, b);
+
+    if(MaxVal % MinVal ==0){
+      return MinVal;
+    }
+    else{
+      MaxVal = MaxVal % MinVal;
+      return gcd_fast( MaxVal  ,MinVal);
+    }
+
+  }
+
   public static void main(String args[]) {
     Scanner scanner = new Scanner(System.in);
     int a = scanner.nextInt();
     int b = scanner.nextInt();
 
-    System.out.println(gcd_naive(a, b));
+//    System.out.println(gcd_naive(a, b));
+      System.out.println(gcd_fast(a, b));
   }
 }
