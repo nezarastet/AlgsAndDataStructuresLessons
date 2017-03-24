@@ -25,7 +25,7 @@ public class CoveringSegments {
             System.arraycopy(points, 0, points_new, 0, points.length);
 
 
-            int minRightEnd = 1000000; // !!!!!!!!!!!!!!!!!!!!
+            int minRightEnd = 1000000001;
             int idx_minRightEnd = -1;
              for (int i = 0; i <segments.length; i++){
                  if (segments[i].end < minRightEnd && segments[i].visited == false){
