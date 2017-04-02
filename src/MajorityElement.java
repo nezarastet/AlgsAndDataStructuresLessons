@@ -4,12 +4,26 @@ import java.io.*;
 public class MajorityElement {
     private static int getMajorityElement(int[] a, int left, int right) {
         if (left == right) {
-            return -1;
-        }
-        if (left + 1 == right) {
             return a[left];
         }
-        //write your code here
+
+        int mid = left + (right-left)/2;
+        int leftMajority = getMajorityElement(a,left, mid);
+        int rightMajority = getMajorityElement(a,mid+1, right);
+
+        if (leftMajority == -1 && rightMajority == -1) return -1;
+        else {
+            int countLeftMajority = 0;
+            int countRightMajority = 0;
+            for (int  i = left; i<=right; i++){
+                if(a[i] == leftMajority) countLeftMajority++;
+                if(a[i] == rightMajority) countRightMajority++;
+            }
+
+            if(countLeftMajority > (right-left +1)/2) return leftMajority;
+            if(countRightMajority > (right-left +1)/2) return rightMajority;
+
+        }
         return -1;
     }
 
@@ -20,7 +34,7 @@ public class MajorityElement {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        if (getMajorityElement(a, 0, a.length) != -1) {
+        if (getMajorityElement(a, 0, a.length-1) != -1) {
             System.out.println(1);
         } else {
             System.out.println(0);
