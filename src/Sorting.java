@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class Sorting {
-    private static Random random = new Random();
+    private static Random random = new Random(77);
 
     private static int[] partition3(int[] a, int l, int r) {
       //write your code here
@@ -12,12 +12,14 @@ public class Sorting {
         int x = a[l];
 
         for (int i = l + 1; i <= r; i++) {
-            if (a[i] < x) {
+            int a_i_copy=a[i];
+            if (a_i_copy < x) {
                 m[0]++;
                 m[1]++;
-                swap(a, i ,m[0]);
+                swap(a, i ,m[1]);
+                swap(a, m[0], m[1]);
             }
-            if(a[i] == x){
+            if(a_i_copy == x){
                 m[1]++;
                 swap(a,i,m[1]);
             }
@@ -70,7 +72,7 @@ public class Sorting {
     }
 
     public static void main(String[] args) {
-/*        FastScanner scanner = new FastScanner(System.in);
+        FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
         int[] a = new int[n];
         for (int i = 0; i < n; i++) {
@@ -80,8 +82,8 @@ public class Sorting {
         for (int i = 0; i < n; i++) {
             System.out.print(a[i] + " ");
        }
-*/
-        stresstest(100);
+
+//        stresstest(10000);
     }
 
     static class FastScanner {
@@ -121,29 +123,27 @@ public class Sorting {
             System.out.printf( n + "\n");
             int[] numbers = new int[n];
             for (int j = 0; j < n; j++){
-                numbers[j]=rand.nextInt(10);
+                numbers[j]=rand.nextInt(10)+1;
                 System.out.printf(numbers[j] + " ");
             }
             System.out.printf("\n");
-            int[] numbers_copy = numbers;
-            randomizedQuickSort(numbers, 0, n - 1, 2);
-            int[] res1 = numbers;
-            randomizedQuickSort(numbers_copy, 0, n - 1, 3);
-            int[] res2 = numbers_copy;
-
 
             boolean badAns = false;
-            for(int j =0; j<numbers.length;j++){
-                if(res1[j]!=res2[j]) badAns = true;
+            randomizedQuickSort(numbers, 0, n-1, 3);
+            for (int j = 0; j < n; j++) {
+                System.out.print(numbers[j] + " ");
             }
+            for(int j = 0; j < n-1;j++){
+                if(numbers[j]>numbers[j+1]) badAns = true;
+            }
+            System.out.printf("\n");
             if (badAns){
-                System.out.printf("Wrong answer:" + res1 + " " + res2 + "\n");
+                System.out.printf("Wrong answer\n");
                 break;
             }
             else{
                 System.out.println("OK");
             }
-
 
         }
 
