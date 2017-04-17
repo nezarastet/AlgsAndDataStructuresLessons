@@ -31,52 +31,44 @@ class check_brackets {
         String text = reader.readLine();
 
         Stack<Bracket> opening_brackets_stack = new Stack<Bracket>();
-        Bracket currentBracket = new Bracket('a',0);
+        Bracket lastBracket = new Bracket('a',0);
         int answ = 0;
 
         for (int position = 0; position < text.length(); ++position) {
             char next = text.charAt(position);
 
             if (next == '(' || next == '[' || next == '{') {
-                currentBracket.type=next;
-                currentBracket.position = position+1;
-                opening_brackets_stack.push(currentBracket);
+                opening_brackets_stack.push(new Bracket(next, position+1));
             }
 
             if (next == ')' || next == ']' || next == '}') {
-                currentBracket = opening_brackets_stack.pop();
+                if (!opening_brackets_stack.empty()) lastBracket = opening_brackets_stack.pop();
+                else lastBracket.type = 'a';
+
                 if (next == ')' ){
-                    if (!currentBracket.Match('(')){
-                        answ = position+1;
-                        break;
-
-                    }
-
-                }
-                    else if (next == ']'){
-                    if(!currentBracket.Match('[')){
+                    if (!lastBracket.Match(')')){
                         answ = position+1;
                         break;
                     }
-
                 }
-                    else{
-                    if (!currentBracket.Match('{')) {
+                else if (next == ']'){
+                    if(!lastBracket.Match(']')){
+                        answ = position+1;
+                        break;
+                    }
+                }
+                else{
+                    if (!lastBracket.Match('}')) {
                         answ = position + 1;
                         break;
                     }
-
                 }
 
             }
         }
 
-        if(opening_brackets_stack.empty()) System.out.println("Success");
-        else if (answ == 0){
-            answ = opening_brackets_stack.peek().position;
-            System.out.println(answ);
-        }
-        else System.out.println(answ);
-
+        if (answ != 0) System.out.println(answ);
+        else if (opening_brackets_stack.empty()) System.out.println("Success");
+        else System.out.println(opening_brackets_stack.peek().position);
     }
 }
