@@ -23,6 +23,13 @@ public class tree_height {
 	public class TreeHeight {
 		int n;
 		int parent[];
+		int root;
+
+		class Node{
+			int node_key;
+			ArrayList<Node> Childrens = new ArrayList();
+		}
+		Node nodes[];
 		
 		void read() throws IOException {
 			FastScanner in = new FastScanner();
@@ -31,6 +38,16 @@ public class tree_height {
 			for (int i = 0; i < n; i++) {
 				parent[i] = in.nextInt();
 			}
+
+			nodes = new Node[n];
+			for (int i = 0; i < n; i++) nodes[i] = new Node();
+
+			for (int i = 0; i < n; i++){
+				nodes[i].node_key = i;
+				if(parent[i] == -1) root = i;
+				else nodes[parent[i]].Childrens.add(nodes[i]);
+			}
+
 		}
 
 		int computeHeight() {
