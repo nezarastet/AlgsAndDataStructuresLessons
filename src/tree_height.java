@@ -20,15 +20,15 @@ public class tree_height {
 		}
 	}
 
+	class Node{
+		int node_key;
+		ArrayList<Node> Childrens = new ArrayList();
+	}
+
 	public class TreeHeight {
 		int n;
 		int parent[];
 		int root;
-
-		class Node{
-			int node_key;
-			ArrayList<Node> Childrens = new ArrayList();
-		}
 		Node nodes[];
 		
 		void read() throws IOException {
@@ -52,15 +52,27 @@ public class tree_height {
 
 		int computeHeight() {
                         // Replace this code with a faster implementation
-			int maxHeight = 0;
+/*
 			for (int vertex = 0; vertex < n; vertex++) {
 				int height = 0;
 				for (int i = vertex; i != -1; i = parent[i])
 					height++;
 				maxHeight = Math.max(maxHeight, height);
 			}
-			return maxHeight;
+*/
+
+			return node_heigth(nodes[root]);
 		}
+	}
+
+	static int node_heigth(Node node){
+    	int cur_node_hight = 0;
+    	if(node.Childrens.isEmpty()) return 1;
+    	else{
+    		for (int i = 0; i < node.Childrens.size(); i++) cur_node_hight = Math.max(cur_node_hight, node_heigth(node.Childrens.get(i)));
+		}
+
+		return cur_node_hight+1;
 	}
 
 	static public void main(String[] args) throws IOException {
