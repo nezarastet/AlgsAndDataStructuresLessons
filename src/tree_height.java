@@ -66,13 +66,13 @@ public class tree_height {
 	}
 
 	static int node_heigth(Node node){
-    	int cur_node_hight = 0;
+    	int cur_node_height = 0;
     	if(node.Childrens.isEmpty()) return 1;
     	else{
-    		for (int i = 0; i < node.Childrens.size(); i++) cur_node_hight = Math.max(cur_node_hight, node_heigth(node.Childrens.get(i)));
+    		for (int i = 0; i < node.Childrens.size(); i++) cur_node_height = Math.max(cur_node_height, node_heigth(node.Childrens.get(i)));
 		}
 
-		return cur_node_hight+1;
+		return cur_node_height+1;
 	}
 
 	static public void main(String[] args) throws IOException {
