@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,16 +26,19 @@ class Response {
 class Buffer {
     public Buffer(int size) {
         this.size_ = size;
-        this.finish_time_ = new ArrayList<Integer>();
+//        this.finish_time_ = new ArrayList<Integer>();
+        this.finish_time_ = new ArrayDeque<Integer>();
     }
 
     public Response Process(Request request) {
         // write your code here
+
         return new Response(false, -1);
     }
 
     private int size_;
-    private ArrayList<Integer> finish_time_;
+//    private ArrayList<Integer> finish_time_;
+    private ArrayDeque<Integer> finish_time_;
 }
 
 class process_packages {
