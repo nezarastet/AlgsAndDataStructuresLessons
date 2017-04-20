@@ -26,18 +26,26 @@ class Response {
 class Buffer {
     public Buffer(int size) {
         this.size_ = size;
-//        this.finish_time_ = new ArrayList<Integer>();
         this.finish_time_ = new ArrayDeque<Integer>();
     }
 
     public Response Process(Request request) {
-        // write your code here
+        while (!finish_time_.isEmpty() && finish_time_.peekFirst() <= request.arrival_time)
+        {
+            finish_time_.pop();
+        }
 
-        return new Response(false, -1);
+        if (finish_time_.size() < size_) {   //add new item to buffer
+            if (finish_time_.isEmpty()) finish_time_.addFirst(request.arrival_time + request.process_time);
+            else finish_time_.add(finish_time_.getLast() + request.process_time);
+            return new Response(false, finish_time_.getLast() - request.process_time);
+        }
+        else {      //drop
+            return new Response(true, -1);
+        }
     }
 
     private int size_;
-//    private ArrayList<Integer> finish_time_;
     private ArrayDeque<Integer> finish_time_;
 }
 
