@@ -39,7 +39,7 @@ public class BuildHeap {
       // but in the worst case gives a quadratic number of swaps.
       //
       // TODO: replace by a more efficient implementation
-      for (int i = 0; i < data.length; ++i) {
+/*      for (int i = 0; i < data.length; ++i) {
         for (int j = i + 1; j < data.length; ++j) {
           if (data[i] > data[j]) {
             swaps.add(new Swap(i, j));
@@ -49,6 +49,33 @@ public class BuildHeap {
           }
         }
       }
+*/
+     int n = data.length;
+     for (int i = (n-1)/2; i>=0; i--) siftDown(data, i);
+    }
+
+    public void swapElements(int[] data, int idx1, int idx2){
+        int tmp=data[idx1];
+        data[idx1] = data[idx2];
+        data[idx2] = tmp;
+    }
+
+    public void siftDown(int[] data, int i){
+        // for min-heap
+        int minIdx = i;
+        int l = 2*i+1; // leftchild
+        if (l<=data.length-1 && data[l] < data[minIdx]) minIdx = l;
+
+        int r =2*i+2; //rightchild
+        if (r <= data.length-1 && data[r] < data[minIdx]) minIdx = r;
+
+        if (i != minIdx){
+            swaps.add(new Swap(i, minIdx));
+            swapElements(data, i, minIdx);
+            siftDown(data, minIdx);
+        }
+
+
     }
 
     public void solve() throws IOException {
