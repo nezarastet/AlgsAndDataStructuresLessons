@@ -22,7 +22,7 @@ public class MergingTables {
     class Table {
         Table parent;
         int rank;
-        int numberOfRows;
+        long numberOfRows;
 
         Table(int numberOfRows) {
             this.numberOfRows = numberOfRows;
@@ -31,11 +31,12 @@ public class MergingTables {
         }
         Table getParent() {
             // find super parent and compress path
+            if (this.parent != this) this.parent = this.parent.getParent();
             return parent;
         }
     }
 
-    int maximumNumberOfRows = -1;
+    long maximumNumberOfRows = -1;
 
     void merge(Table destination, Table source) {
         Table realDestination = destination.getParent();
@@ -43,9 +44,24 @@ public class MergingTables {
         if (realDestination == realSource) {
             return;
         }
+
         // merge two components here
         // use rank heuristic
         // update maximumNumberOfRows
+        // настрать кто там из них source а кто destination :)
+        if (realDestination.rank > realSource.rank){
+            realSource.parent = realDestination;
+            realDestination.numberOfRows = realDestination.numberOfRows + realSource.numberOfRows;
+            realSource.numberOfRows = 0;
+            maximumNumberOfRows = Math.max(maximumNumberOfRows, realDestination.numberOfRows);
+        }
+        else {
+            realDestination.parent = realSource;
+            realSource.numberOfRows = realDestination.numberOfRows + realSource.numberOfRows;
+            realDestination.numberOfRows = 0;
+            maximumNumberOfRows = Math.max(maximumNumberOfRows, realSource.numberOfRows);
+            if (realDestination.rank == realSource.rank) realSource.rank = realSource.rank+1;
+        }
     }
 
     public void run() {
