@@ -12,6 +12,8 @@ public class PhoneBook {
     private FastScanner in = new FastScanner();
     // Keep list of all existing (i.e. not deleted yet) contacts.
     private List<Contact> contacts = new ArrayList<>();
+    private String[] contactsArr = new String[100000000];
+
 
     public static void main(String[] args) {
         new PhoneBook().processQueries();
@@ -37,29 +39,33 @@ public class PhoneBook {
         if (query.type.equals("add")) {
             // if we already have contact with such number,
             // we should rewrite contact's name
-            boolean wasFound = false;
-            for (Contact contact : contacts)
+/*            for (Contact contact : contacts)
                 if (contact.number == query.number) {
                     contact.name = query.name;
                     wasFound = true;
                     break;
                 }
-            // otherwise, just add it
-            if (!wasFound)
-                contacts.add(new Contact(query.name, query.number));
+*/            // otherwise, just add it
+                contactsArr[query.number] = query.name;
+
         } else if (query.type.equals("del")) {
-            for (Iterator<Contact> it = contacts.iterator(); it.hasNext(); )
+/*            for (Iterator<Contact> it = contacts.iterator(); it.hasNext(); )
                 if (it.next().number == query.number) {
                     it.remove();
                     break;
                 }
+*/
+             contactsArr[query.number] = null;
         } else {
             String response = "not found";
+/*
             for (Contact contact: contacts)
                 if (contact.number == query.number) {
                     response = contact.name;
                     break;
                 }
+*/
+            if(contactsArr[query.number] != null) response = contactsArr[query.number];
             writeResponse(response);
         }
     }
@@ -67,8 +73,8 @@ public class PhoneBook {
     public void processQueries() {
         int queryCount = in.nextInt();
         for (int i = 0; i < queryCount; ++i)
-            processQuery(readQuery());
-    }
+    processQuery(readQuery());
+}
 
     static class Contact {
         String name;
