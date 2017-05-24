@@ -40,25 +40,49 @@ public class tree_orders {
 
 		List<Integer> inOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
-                        
+			result = InOrderTraveral(0, this, result);
+			return result;
+		}
+
+		public ArrayList<Integer> InOrderTraveral (int node, TreeOrders tree, ArrayList<Integer> result){
+			if (node == -1) return result;
+			else {
+				InOrderTraveral(left[node], tree, result);
+				result.add(key[node]);
+				InOrderTraveral(right[node], tree, result);
+			}
 			return result;
 		}
 
 		List<Integer> preOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
-                        
+			result = PreOrderTraveral(0, this, result);
+			return result;
+		}
+
+		public ArrayList<Integer> PreOrderTraveral (int node, TreeOrders tree, ArrayList<Integer> result){
+			if (node == -1) return result;
+			else {
+				result.add(key[node]);
+				PreOrderTraveral(left[node], tree, result);
+				PreOrderTraveral(right[node], tree, result);
+			}
 			return result;
 		}
 
 		List<Integer> postOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
-                        
+			result = PostOrderTraveral(0, this, result);
+			return result;
+		}
+
+		public ArrayList<Integer> PostOrderTraveral (int node, TreeOrders tree, ArrayList<Integer> result){
+			if (node == -1) return result;
+			else {
+				PostOrderTraveral(left[node], tree, result);
+				PostOrderTraveral(right[node], tree, result);
+				result.add(key[node]);
+			}
 			return result;
 		}
 	}

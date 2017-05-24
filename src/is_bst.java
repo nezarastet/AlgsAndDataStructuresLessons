@@ -46,10 +46,31 @@ public class is_bst {
         }
 
         boolean isBinarySearchTree() {
-          // Implement correct algorithm here
+            if (nodes == 0) return true;
+
+            ArrayList<Integer> result = new ArrayList<Integer>();
+            result = InOrderTraveral(0, tree, result);
+            int prevKey=result.get(0);
+            for (int i = 1;  i < result.size(); i++)
+            {
+                if(prevKey >= result.get(i)) return false;
+                prevKey = result.get(i);
+            }
           return true;
         }
+
+        private ArrayList<Integer> InOrderTraveral (int nodeIdx, Node[] tree, ArrayList<Integer> result){
+            if (nodeIdx == -1) return result;
+            else {
+                InOrderTraveral(tree[nodeIdx].left, tree, result);
+                result.add(tree[nodeIdx].key);
+                InOrderTraveral(tree[nodeIdx].right, tree, result);
+            }
+            return result;
+        }
+
     }
+
 
     static public void main(String[] args) throws IOException {
         new Thread(null, new Runnable() {
@@ -64,7 +85,7 @@ public class is_bst {
     public void run() throws IOException {
         IsBST tree = new IsBST();
         tree.read();
-        if (tree.solve()) {
+        if (tree.isBinarySearchTree()) {
             System.out.println("CORRECT");
         } else {
             System.out.println("INCORRECT");
