@@ -45,9 +45,42 @@ public class is_bst_hard {
             }
         }
 
+        private ArrayList<Integer> resultIdx = new ArrayList<Integer>();
         boolean isBinarySearchTree() {
-          // Implement correct algorithm here
-          return true;
+            if (nodes == 0) return true;
+
+            ArrayList<Integer> result = new ArrayList<Integer>();
+            result = InOrderTraveral(0, tree, result);
+            int prevKey=result.get(0);
+            for (int i = 1;  i < result.size(); i++)
+            {
+                if(prevKey > result.get(i)) return false;
+                else if (prevKey == result.get(i)){
+
+                    Node prevNode = tree[resultIdx.get(i-1)];
+                    Node curNode = tree[resultIdx.get(i)];
+                    boolean isOk = false;
+
+                    if (prevNode.right!=-1 && prevNode.right == resultIdx.get(i)) isOk = true;
+                    if (prevNode.right!=-1 && prevNode.key < tree[prevNode.right].key) isOk = true;
+
+                    if (!isOk) return false;
+                }
+                else prevKey = result.get(i);
+
+            }
+            return true;
+        }
+
+        private ArrayList<Integer> InOrderTraveral (int nodeIdx, Node[] tree, ArrayList<Integer> result){
+            if (nodeIdx == -1) return result;
+            else {
+                InOrderTraveral(tree[nodeIdx].left, tree, result);
+                result.add(tree[nodeIdx].key);
+                resultIdx.add(nodeIdx);
+                InOrderTraveral(tree[nodeIdx].right, tree, result);
+            }
+            return result;
         }
     }
 
@@ -64,12 +97,11 @@ public class is_bst_hard {
     public void run() throws IOException {
         IsBST tree = new IsBST();
         tree.read();
-/*
-        if (tree.solve()) {
+        if (tree.isBinarySearchTree()) {
             System.out.println("CORRECT");
         } else {
             System.out.println("INCORRECT");
         }
-*/
+
     }
 }
