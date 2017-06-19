@@ -2,9 +2,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Acyclicity {
+
     private static int acyclic(ArrayList<Integer>[] adj) {
-        //write your code here
+        boolean pizdets = false;
+
+        for (int i = 0; i < adj.length; i++)
+        {
+            pizdets =   DFS(i, i, adj, pizdets);
+            if (pizdets) return 1;
+        }
         return 0;
+    }
+
+    public static boolean DFS(int startVertex, int vertex, ArrayList<Integer>[] adj, boolean pizdets){
+
+        for (int i = 0; i < adj[vertex].size(); i++){
+            if (adj[vertex].get(i) == startVertex){
+                pizdets = true;
+                continue;
+            }
+            pizdets =  DFS(startVertex, adj[vertex].get(i),adj, pizdets);
+        }
+        for (int i = 0; i < adj[vertex].size(); i++)  adj[vertex].remove(i);
+
+        return pizdets;
     }
 
     public static void main(String[] args) {
