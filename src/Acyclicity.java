@@ -3,8 +3,32 @@ import java.util.Scanner;
 
 public class Acyclicity {
     private static int acyclic(ArrayList<Integer>[] adj) {
-        //write your code here
-        return 0;
+        boolean hasLoop = false;
+        int[] traceVertex = new int[adj.length];
+        for (int i = 0; i < traceVertex.length; i++) traceVertex[i] = -1;
+        for (int i = 0; i < adj.length; i++){
+            hasLoop = DFS(i, i, adj, hasLoop, traceVertex);
+            if (hasLoop) break;
+        }
+        if (hasLoop) return 1;
+        else return 0;
+    }
+
+    private static boolean DFS(int startVertex, int currentVertex, ArrayList<Integer>[] adj, boolean hasLoop, int[] traceVertex){
+        traceVertex[currentVertex] = startVertex;
+        
+        for (int i = 0; i < adj[currentVertex].size(); i++){
+            if (traceVertex[adj[currentVertex].get(i)] == startVertex){
+                hasLoop = true;
+                break;
+            }
+            else {
+               hasLoop = DFS(startVertex, adj[currentVertex].get(i), adj, hasLoop, traceVertex);
+            }
+        }
+        if (!hasLoop) adj[currentVertex].clear();
+
+        return hasLoop;
     }
 
     public static void main(String[] args) {
