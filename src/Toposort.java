@@ -3,15 +3,32 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Toposort {
-    private static ArrayList<Integer> toposort(ArrayList<Integer>[] adj) {
-        int used[] = new int[adj.length];
+
+    private boolean[] sink;
+
+    private  ArrayList<Integer> toposort(ArrayList<Integer>[] adj) {
+        sink = new boolean[adj.length];
         ArrayList<Integer> order = new ArrayList<Integer>();
-        //write your code here
+
+        for (int i = 0; i < adj.length; i++){
+            if (sink[i]) continue;
+            order = dfs(i, adj, sink, order);
+        }
+
         return order;
     }
 
-    private static void dfs(ArrayList<Integer>[] adj, int[] used, ArrayList<Integer> order, int s) {
-      //write your code here
+    private  ArrayList<Integer> dfs(int currentVertex, ArrayList<Integer>[] adj, boolean[] sink, ArrayList<Integer> order) {
+
+        for (int i = 0; i < adj[currentVertex].size(); i++) {
+            if (sink[adj[currentVertex].get(i)]) continue;
+            order = dfs(adj[currentVertex].get(i), adj, sink, order);
+        }
+        sink[currentVertex] = true;
+        order.add(currentVertex);
+        adj[currentVertex].clear();
+
+       return order;
     }
 
     public static void main(String[] args) {
@@ -28,8 +45,9 @@ public class Toposort {
             y = scanner.nextInt();
             adj[x - 1].add(y - 1);
         }
-        ArrayList<Integer> order = toposort(adj);
-        for (int x : order) {
+        ArrayList<Integer> order = new Toposort().toposort(adj);
+        for (int i = order.size()-1; i >= 0; i--) {
+            int x = order.get(i);
             System.out.print((x + 1) + " ");
         }
     }
