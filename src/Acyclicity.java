@@ -15,9 +15,10 @@ public class Acyclicity {
     }
 
     private static boolean DFS(int startVertex, int currentVertex, ArrayList<Integer>[] adj, boolean hasLoop, int[] traceVertex){
+
         traceVertex[currentVertex] = startVertex;
-        
         for (int i = 0; i < adj[currentVertex].size(); i++){
+            if (traceVertex[adj[currentVertex].get(i)] == -5) continue; // next Vertex is a sink
             if (traceVertex[adj[currentVertex].get(i)] == startVertex){
                 hasLoop = true;
                 break;
@@ -26,7 +27,8 @@ public class Acyclicity {
                hasLoop = DFS(startVertex, adj[currentVertex].get(i), adj, hasLoop, traceVertex);
             }
         }
-        if (!hasLoop) adj[currentVertex].clear();
+        traceVertex[currentVertex] = -5; // this vertex is a sink now
+        adj[currentVertex].clear();
 
         return hasLoop;
     }
