@@ -1,13 +1,37 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class Bipartite {
     private static int bipartite(ArrayList<Integer>[] adj) {
-        //write your code here
-        return -1;
+        int n = adj.length;
+        int[] colour = new int[n];
+        //1 - black, 2 - white, 0 - not colored
+        for (int i = 0; i < n; i++){
+            if (colour[i]==0)  colour = BFS(adj, colour, i);
+        }
+        for (int i = 0;  i < n; i++){
+            if (colour[i] == 42) return 0;
+        }
+        return 1;
     }
+
+    private static int[] BFS(ArrayList<Integer>[] adj, int[] colour, int s) {
+        ArrayDeque<Integer> Q  = new ArrayDeque<Integer>();
+        colour[s] = 1;
+        Q.addLast(s);
+        while (!Q.isEmpty()){
+            int u = Q.pop();
+            for (int i = 0; i < adj[u].size(); i++){
+                if(colour[adj[u].get(i)] == 0){
+                    Q.addLast(adj[u].get(i));
+                    if (colour[u] == 1) colour[adj[u].get(i)] = 2;
+                    else colour[adj[u].get(i)] = 1;
+                }
+                else if (colour[adj[u].get(i)] == colour[u]) colour[u] = 42;
+            }
+        }
+        return colour;
+    }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
