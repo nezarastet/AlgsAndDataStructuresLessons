@@ -2,7 +2,40 @@ import java.util.*;
 
 public class Dijkstra {
     private static int distance(ArrayList<Integer>[] adj, ArrayList<Integer>[] cost, int s, int t) {
-        return -1;
+        int[] dist = new int[adj.length];
+        int[] prev = new int[adj.length];
+        boolean[] visited = new boolean[adj.length];
+
+        for (int i = 0; i < adj.length; i++){
+            dist[i] = 1000000001;
+            prev[i] = -1;
+            visited[i] = false;
+        }
+        dist[s] = 0;
+        while (true){
+            int minVal = 1000000001;
+            int minValIdx = -1;
+            for (int i = 0; i < adj.length; i++){
+                if (dist[i] < minVal && !visited[i]){
+                    minVal = dist[i];
+                    minValIdx = i;
+                }
+            }
+
+            if (minValIdx != -1){
+                visited[minValIdx] = true;
+                for (int i = 0; i < adj[minValIdx].size(); i++){
+                    int v = adj[minValIdx].get(i);
+                    if(dist[v] > (dist[minValIdx] + cost[minValIdx].get(i))){
+                        dist[v] = dist[minValIdx] + cost[minValIdx].get(i);
+                        prev[v] = minValIdx;
+                    }
+                }
+            }
+            else break;
+        }
+        if(dist[t] == 1000000001) return -1;
+        else return dist[t];
     }
 
     public static void main(String[] args) {
