@@ -3,8 +3,29 @@ import java.util.Scanner;
 
 public class NegativeCycle {
     private static int negativeCycle(ArrayList<Integer>[] adj, ArrayList<Integer>[] cost) {
-        // write your code here
-        return 0;
+
+        int[] dist = new int[adj.length];
+        int[] prev = new int[adj.length];
+        for (int i = 0; i < adj.length; i++){
+            dist[i] = 1000000001;
+            prev[i] = -1;
+        }
+        dist[0] = 0;
+        int anw = 0;
+        for (int j = 0; j <= adj.length; j++) {
+            for (int idx = 0; idx < adj.length; idx++) {
+                for (int i = 0; i < adj[idx].size(); i++) {
+                    int v = adj[idx].get(i);
+                    if (dist[v] > (dist[idx] + cost[idx].get(i))) {
+                        dist[v] = dist[idx] + cost[idx].get(i);
+                        prev[v] = idx;
+                        if (j == adj.length) anw = 1;
+                    }
+                }
+            }
+        }
+
+        return anw;
     }
 
     public static void main(String[] args) {
